@@ -1,5 +1,5 @@
 import {canvas, c} from '/script.js';
-import {renderBlocks} from '/blocks.js';
+import {renderBlocks, bars} from '/blocks.js';
 
 const birdImg = new Image();
 birdImg.src = "bird.png"; // make sure file is in same folder
@@ -40,15 +40,39 @@ window.addEventListener("keydown", () => {
     bird.velocity = bird.lift;
 });
 
-let collision = false;
+export let speed = 200;
 
 function animate() {
-    if (collision) return;
+
     c.clearRect(0, 0, canvas.width, canvas.height);
 
     updateBird();     // physics
     renderBlocks();   // pipes
     drawBird();       // bird
+    
+    for (let bar of bars) {
+
+        let lowerY = bar.upperHeight + bar.gap;
+        
+        //checks if bird hits any bar
+
+        if (
+            bird.x < bar.x + bar.width &&
+            bird.x + bird.width > bar.x &&
+            bird.y < bar.upperHeight
+        ) {
+            speed = 0;
+        }   
+
+        if (
+            bird.x < bar.x + bar.width &&
+            bird.x + bird.width > bar.x &&
+            bird.y + bird.height > lowerY
+        ) {
+            speed = 0;
+        }
+       
+    }
 
     requestAnimationFrame(animate);
 

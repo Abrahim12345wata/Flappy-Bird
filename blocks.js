@@ -1,10 +1,7 @@
 import {canvas, c} from '/script.js';
+import {speed} from '/bird.js';
 
-// c.fillRect(x, y, width, height);
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-const bars = [];
+export const bars = [];
 const gap = canvas.height * 0.25;
 
 function createBars() {
@@ -16,7 +13,7 @@ function createBars() {
 
         let centerY = Math.random() * (canvas.height * 0.6) + canvas.height * 0.2;
 
-let upperHeight = centerY - gap / 2;
+        let upperHeight = centerY - gap / 2;
 
         bars.push({
             x: x,
@@ -24,13 +21,13 @@ let upperHeight = centerY - gap / 2;
             upperHeight: upperHeight,
             gap: gap
         });
-        
+            
         x += spacing;
     }
     
 }
 
-export  function renderBlocks() {
+export function renderBlocks() {
     
     for (let bar of bars) {
         if (bar.x + bar.width < 0) {
@@ -52,6 +49,7 @@ export  function renderBlocks() {
 
         c.fillStyle = gradient;
 
+        // c.fillRect(x, y, width, height);
         c.fillRect(bar.x, 0, bar.width, bar.upperHeight);
         c.fillRect(bar.x, lowerY, bar.width, lowerHeight);
     }
@@ -68,9 +66,8 @@ function animate(time) {
     c.clearRect(0, 0, canvas.width, canvas.height);
 
     for (let bar of bars) {
-        bar.x -= 400 * deltaTime; 
+        bar.x -= speed * deltaTime; 
     }
-
 
     renderBlocks();
 
