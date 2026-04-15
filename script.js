@@ -10,36 +10,38 @@ var c = canvas.getContext('2d');
 // c.fillRect(x, y, width, height);
 c.fillStyle = 'green';
 
-let x, upperY, lowerY;
-let upperWidth, upperHeight, lowerWidth, lowerHeight;
-const lowerYarr = [450, 550, 350];
-const upperHeightarr = [200, 300, 100];
-const lowerHeightarr = [200, 100, 300];
-let index;
-
 
 function renderBlocks() {
-    x = 400;
+    let x = canvas.width * 0.3; // starting position
+    const upperY = 0;
+    let width = canvas.width * 0.08; 
+    let spacing = canvas.width * 0.25; // space between bars
 
-    while (x <= 1000) {
-        // default bars
-        upperY = 0;
-        width = 100;
+    while (x <= canvas.width) {
+        
+        const gap = canvas.height * 0.25; // gap between pipes
 
-        index = Math.floor(Math.random() * 3);
-        lowerY = lowerYarr[index];
-        upperHeight = upperHeightarr[index];
-        lowerHeight = lowerHeightarr[index];;
+        let minHeight = canvas.height * 0.1;
+        let maxHeight = canvas.height * 0.6;
+
+        let upperHeight = Math.random() * (maxHeight - minHeight) + minHeight;
+        let lowerY = upperHeight + gap;
+        let lowerHeight = canvas.height - lowerY;
 
         c.fillRect(x, upperY, width, upperHeight);
         c.fillRect(x, lowerY , width, lowerHeight);
 
-        x += 300;
+        x += spacing;
     }
 
 }
 
-renderBlocks();
+function draw() {
+    c.clearRect(0, 0, canvas.width, canvas.height);
+    renderBlocks();
+}
+
+draw();
 
 
 
