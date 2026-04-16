@@ -15,3 +15,17 @@ canvas {
     font-family: 'Flappy';
     src: url('flappy-font.ttf');
 }
+
+/* 📱 Mobile */
+@media (max-width: 768px) {
+    canvas {
+        width: 100vw; /* full width */
+    }
+}
+
+/* 💻 Desktop */
+@media (min-width: 769px) {
+    canvas {
+        width: 50vw; /* fixed game width */
+    }
+}
