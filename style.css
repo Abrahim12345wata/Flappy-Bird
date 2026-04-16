@@ -7,3 +7,8 @@ canvas {
     background: skyblue;
     width: 100%;
 }
+
+@font-face {
+    font-family: 'Flappy';
+    src: url('flappy-font.ttf');
+}

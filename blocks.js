@@ -19,7 +19,8 @@ function createBars() {
             x: x,
             width: width,
             upperHeight: upperHeight,
-            gap: gap
+            gap: gap,
+            passed: false
         });
             
         x += spacing;
@@ -32,6 +33,8 @@ export function renderBlocks() {
     for (let bar of bars) {
         if (bar.x + bar.width < 0) {
             bar.x += bars.length * (canvas.width * 0.25);
+
+            bar.passed = false;
 
             let centerY = Math.random() * (canvas.height * 0.6) + canvas.height * 0.2;
             bar.upperHeight = centerY - bar.gap / 2;

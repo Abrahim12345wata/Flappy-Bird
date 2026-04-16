@@ -1,6 +1,9 @@
 import {canvas, c} from '/script.js';
 import {renderBlocks, bars} from '/blocks.js';
 
+export let speed = 250;
+let score = 0;
+
 const birdImg = new Image();
 birdImg.src = "bird.png"; // make sure file is in same folder
 
@@ -40,17 +43,29 @@ window.addEventListener("keydown", () => {
     bird.velocity = bird.lift;
 });
 
-export let speed = 200;
+function drawScore() {
+    c.textAlign = "center"; // center horizontally
+    c.fillStyle = "white";
+    c.strokeStyle = "black";
+    c.lineWidth = 4;
 
-function animate() {
+    c.font = "bold 70px Flappy";
 
-    c.clearRect(0, 0, canvas.width, canvas.height);
+    let x = canvas.width / 2;
+    let y = canvas.height * 0.2;
 
-    updateBird();     // physics
-    renderBlocks();   // pipes
-    drawBird();       // bird
-    
-    for (let bar of bars) {
+    c.strokeText(score, x, y); // outline
+    c.fillText(score, x, y);   // fill
+}
+
+function collisionCheck() {
+     for (let bar of bars) {
+
+        if (!bar.passed && bird.x > bar.x + bar.width) {
+            score++;
+            bar.passed = true;
+            speed += 2;
+        }
 
         let lowerY = bar.upperHeight + bar.gap;
         
@@ -73,6 +88,18 @@ function animate() {
         }
        
     }
+}
+
+function animate() {
+
+    c.clearRect(0, 0, canvas.width, canvas.height);
+
+    collisionCheck();
+    updateBird();     // physics
+    renderBlocks();   // pipes
+    drawBird();       // bird
+    drawScore();   
+
 
     requestAnimationFrame(animate);
 
