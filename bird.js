@@ -13,15 +13,15 @@ birdImg.src = "bird.png"; // make sure file is in same folder
 const bird = {
     x: canvas.width * 0.2,
     y: canvas.height * 0.5,
-    width: 100,
-    height: 80,
+    width: canvas.width * 0.08,
+    height: canvas.height * 0.08,
     velocity: 0,
     gravity: 0,
     lift: -5
 };
 
 function start() {
-    speed = 250;
+    speed = 200;
     bird.gravity = 0.1;
     hasRun = true;
 }
@@ -54,7 +54,12 @@ window.addEventListener("keydown", () => {
     // run only once
     if (!hasRun){
         start();
+        gameStarted = true;
     }
+});
+
+window.addEventListener("touchstart", () => {
+    bird.velocity = bird.lift;
 });
 
 function drawScore() {
@@ -110,6 +115,12 @@ function collisionCheck() {
 
 function animate() {
 
+    if (!gameStarted) {
+        drawStartText();
+        requestAnimationFrame(animate);
+        return;
+    }
+
     c.clearRect(0, 0, canvas.width, canvas.height);
 
     collisionCheck();
@@ -137,3 +148,17 @@ function animate() {
 birdImg.onload = () => {
     animate(); // start game ONLY after image loads
 };
+
+let gameStarted = false;
+
+function drawStartText() {
+    c.fillStyle = "white";
+    c.strokeStyle = "black";
+    c.lineWidth = 4;
+
+    c.textAlign = "center";
+    c.font = "bold 40px Arial";
+
+    c.strokeText("Press Space to Start", canvas.width / 2, canvas.height / 2);
+    c.fillText("Press Space to Start", canvas.width / 2, canvas.height / 2);
+}

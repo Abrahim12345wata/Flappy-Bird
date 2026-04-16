@@ -2,12 +2,12 @@ import {canvas, c} from './script.js';
 import {speed} from './bird.js';
 
 export const bars = [];
-const gap = canvas.height * 0.25;
+let gap = canvas.height * 0.35;
+let spacing = canvas.width * 0.4;
+let width = Math.min(canvas.width * 0.08, 80);
+let x = canvas.width;
 
 function createBars() {
-    let spacing = canvas.width * 0.25;
-    let width = canvas.width * 0.08;
-    let x = canvas.width;
 
     for (let i = 0; i < 6; i++) {
 
@@ -32,7 +32,7 @@ export function renderBlocks() {
     
     for (let bar of bars) {
         if (bar.x + bar.width < 0) {
-            bar.x += bars.length * (canvas.width * 0.25);
+            bar.x += bars.length * spacing;
 
             bar.passed = false;
 
