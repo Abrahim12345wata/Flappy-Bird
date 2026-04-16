@@ -13,11 +13,11 @@ birdImg.src = "bird.png"; // make sure file is in same folder
 const bird = {
     x: canvas.width * 0.2,
     y: canvas.height * 0.5,
-    width: canvas.width * 0.08,
+    width: canvas.width * 0.1,
     height: canvas.height * 0.08,
     velocity: 0,
-    gravity: canvas.height * 2,
-    lift: -canvas.height * 0.6
+    gravity: 1800,
+    lift: -600
 }
 
 function start() {
@@ -29,7 +29,9 @@ function drawBird() {
     c.save();
 
     c.translate(bird.x + bird.width / 2, bird.y + bird.height / 2);
-    c.rotate(bird.velocity * 0.05);
+
+    const angle = Math.max(-1, Math.min(1, bird.velocity / 600));
+    c.rotate(angle);
 
     c.drawImage(
         birdImg,
@@ -46,8 +48,8 @@ function updateBird(deltaTime) {
     bird.velocity += bird.gravity * deltaTime;
 
     if (bird.velocity > canvas.height * 1.5) {
-    bird.velocity = canvas.height * 1.5;
-}
+        bird.velocity = canvas.height * 1.5;
+    }
 
     bird.y += bird.velocity * deltaTime;
 }
@@ -122,7 +124,11 @@ function collisionCheck() {
 
 }
 
-function animate() {
+let lastTime = 0;
+
+function animate(time = 0) {
+    const deltaTime = (time - lastTime) / 1000;
+    lastTime = time;
 
     if (!gameStarted) {
         drawStartText();
@@ -133,14 +139,12 @@ function animate() {
     c.clearRect(0, 0, canvas.width, canvas.height);
 
     collisionCheck();
-    updateBird();     // physics
-    renderBlocks();   // pipes
-    drawBird();       // bird
-    drawScore();   
+    updateBird(deltaTime);   // ✅ FIXED
+    renderBlocks();
+    drawBird();
+    drawScore();
 
-
-    requestAnimationFrame(animate);
-
+    // bounds check
     if (bird.y + bird.height > canvas.height) {
         bird.y = canvas.height - bird.height;
         bird.velocity = 0;
@@ -152,8 +156,9 @@ function animate() {
         bird.velocity = 0;
         speed = 0;
     }
-}
 
+    requestAnimationFrame(animate);
+}
 birdImg.onload = () => {
     animate(); // start game ONLY after image loads
 };
