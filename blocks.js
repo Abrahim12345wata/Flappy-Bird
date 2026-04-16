@@ -1,5 +1,5 @@
-import {canvas, c} from '/script.js';
-import {speed} from '/bird.js';
+import {canvas, c} from './script.js';
+import {speed} from './bird.js';
 
 export const bars = [];
 const gap = canvas.height * 0.25;

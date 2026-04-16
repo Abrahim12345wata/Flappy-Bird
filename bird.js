@@ -1,5 +1,5 @@
-import {canvas, c} from '/script.js';
-import {renderBlocks, bars} from '/blocks.js';
+import {canvas, c} from './script.js';
+import {renderBlocks, bars} from './blocks.js';
 
 export let speed;
 let startingSpeed = 0;
