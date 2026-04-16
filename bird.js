@@ -16,9 +16,9 @@ const bird = {
     width: canvas.width * 0.08,
     height: canvas.height * 0.08,
     velocity: 0,
-    gravity: canvas.height * 0.0001,
-    lift: -canvas.height * 0.005
-};
+    gravity: canvas.height * 2,
+    lift: -canvas.height * 0.6
+}
 
 function start() {
     speed = canvas.width * 0.3;
@@ -42,13 +42,14 @@ function drawBird() {
     c.restore();
 }
 
-function updateBird() {
-    bird.velocity += bird.gravity;
+function updateBird(deltaTime) {
+    bird.velocity += bird.gravity * deltaTime;
 
-    if (bird.velocity > canvas.height * 0.02) {
-        bird.velocity = canvas.height * 0.02;
-    }
-    bird.y += bird.velocity;
+    if (bird.velocity > canvas.height * 1.5) {
+    bird.velocity = canvas.height * 1.5;
+}
+
+    bird.y += bird.velocity * deltaTime;
 }
 
 window.addEventListener("keydown", () => {
