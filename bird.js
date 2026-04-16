@@ -16,13 +16,12 @@ const bird = {
     width: canvas.width * 0.08,
     height: canvas.height * 0.08,
     velocity: 0,
-    gravity: 0,
-    lift: -5
+    gravity: canvas.height * 0.0001,
+    lift: -canvas.height * 0.005
 };
 
 function start() {
-    speed = 200;
-    bird.gravity = 0.1;
+    speed = canvas.width * 0.3;
     hasRun = true;
 }
 
@@ -44,12 +43,17 @@ function drawBird() {
 }
 
 function updateBird() {
-    bird.velocity += bird.gravity; // falling
+    bird.velocity += bird.gravity;
+
+    if (bird.velocity > canvas.height * 0.02) {
+        bird.velocity = canvas.height * 0.02;
+    }
     bird.y += bird.velocity;
 }
 
 window.addEventListener("keydown", () => {
-    bird.velocity = bird.lift;
+    bird.velocity = 0;
+    bird.velocity += bird.lift;
 
     // run only once
     if (!hasRun){
@@ -58,9 +62,11 @@ window.addEventListener("keydown", () => {
     }
 });
 
-window.addEventListener("touchstart", () => {
-    bird.velocity = bird.lift;
-
+window.addEventListener("pointerdown", () => {
+    bird.velocity = 0;
+    bird.velocity += bird.lift;
+    
+    // run only once
     if (!hasRun){
         start();
         gameStarted = true;
@@ -88,7 +94,7 @@ function collisionCheck() {
         if (!bar.passed && bird.x > bar.x + bar.width) {
             score++;
             bar.passed = true;
-            speed += 2;
+    
         }
 
         let lowerY = bar.upperHeight + bar.gap;
@@ -112,10 +118,7 @@ function collisionCheck() {
         }
        
     }
-    
-    if (hasRun && speed == 0) {
-        bird.lift = 0;
-    } 
+
 }
 
 function animate() {

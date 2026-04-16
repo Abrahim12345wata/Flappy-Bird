@@ -1,6 +1,10 @@
 body {
     margin: 0;
+    background: black;
+    display: flex;
+    justify-content: center;
 }
+
 
 canvas {
     border: 1px solid black;
@@ -11,20 +15,15 @@ canvas {
     margin: 0 auto;
 }
 
-@font-face {
-    font-family: 'Flappy';
-    src: url('flappy-font.ttf');
-}
-
 /* 📱 Mobile */
-@media (max-width: 768px) {
+@media (max-width: 600px) {
     canvas {
         width: 100vw; /* full width */
     }
 }
 
 /* 💻 Desktop */
-@media (min-width: 769px) {
+@media (min-width: 600px) {
     canvas {
         width: 50vw; /* fixed game width */
     }
