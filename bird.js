@@ -1,8 +1,11 @@
 import {canvas, c} from '/script.js';
 import {renderBlocks, bars} from '/blocks.js';
 
-export let speed = 250;
+export let speed;
+let startingSpeed = 0;
 let score = 0;
+speed = startingSpeed;
+let hasRun = false;
 
 const birdImg = new Image();
 birdImg.src = "bird.png"; // make sure file is in same folder
@@ -13,9 +16,15 @@ const bird = {
     width: 100,
     height: 80,
     velocity: 0,
-    gravity: 0.1,
+    gravity: 0,
     lift: -5
 };
+
+function start() {
+    speed = 250;
+    bird.gravity = 0.1;
+    hasRun = true;
+}
 
 function drawBird() {
     c.save();
@@ -41,6 +50,11 @@ function updateBird() {
 
 window.addEventListener("keydown", () => {
     bird.velocity = bird.lift;
+
+    // run only once
+    if (!hasRun){
+        start();
+    }
 });
 
 function drawScore() {
@@ -88,6 +102,10 @@ function collisionCheck() {
         }
        
     }
+    
+    if (hasRun && speed == 0) {
+        bird.lift = 0;
+    } 
 }
 
 function animate() {
@@ -104,13 +122,15 @@ function animate() {
     requestAnimationFrame(animate);
 
     if (bird.y + bird.height > canvas.height) {
-    bird.y = canvas.height - bird.height;
-    bird.velocity = 0;
+        bird.y = canvas.height - bird.height;
+        bird.velocity = 0;
+        speed = 0;
     }
 
     if (bird.y < 0) {
         bird.y = 0;
         bird.velocity = 0;
+        speed = 0;
     }
 }
 
