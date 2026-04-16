@@ -4,7 +4,7 @@ import {speed} from './bird.js';
 export const bars = [];
 let gap = canvas.height * 0.35;
 let spacing = canvas.width * 0.4;
-let width = Math.min(canvas.width * 0.08, 80);
+let width = Math.min(canvas.width * 0.1, 80);
 let x = canvas.width;
 
 function createBars() {

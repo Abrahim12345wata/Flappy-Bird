@@ -60,6 +60,11 @@ window.addEventListener("keydown", () => {
 
 window.addEventListener("touchstart", () => {
     bird.velocity = bird.lift;
+
+    if (!hasRun){
+        start();
+        gameStarted = true;
+    }
 });
 
 function drawScore() {
@@ -159,6 +164,6 @@ function drawStartText() {
     c.textAlign = "center";
     c.font = "bold 40px Arial";
 
-    c.strokeText("Press Space to Start", canvas.width / 2, canvas.height / 2);
-    c.fillText("Press Space to Start", canvas.width / 2, canvas.height / 2);
+    c.strokeText("Click to Start", canvas.width / 2, canvas.height / 2);
+    c.fillText("Click to Start", canvas.width / 2, canvas.height / 2);
 }
